@@ -32,18 +32,18 @@
             </ul>
             <h3>Fragment kodu (obsługa komendy join):</h3>
             <pre><code>
-            @commands.command()
-            async def join(self, ctx):
-                """Joins the user's voice channel."""
-                print(f'bot join {ctx.author.voice.channel}, {ctx.voice_client}')
-                if ctx.author.voice:
-                    if ctx.voice_client is None:
-                        await ctx.author.voice.channel.connect()
-                        await ctx.send(f"Joined {ctx.author.voice.channel}")
-                    else:
-                        await ctx.send("Already connected to a voice channel.")
-                else:
-                    await ctx.send("You need to be in a voice channel to use this command!")
+@commands.command()
+async def join(self, ctx):
+    """Joins the user's voice channel."""
+    print(f'bot join {ctx.author.voice.channel}, {ctx.voice_client}')
+    if ctx.author.voice:
+        if ctx.voice_client is None:
+            await ctx.author.voice.channel.connect()
+            await ctx.send(f"Joined {ctx.author.voice.channel}")
+        else:
+            await ctx.send("Already connected to a voice channel.")
+    else:
+        await ctx.send("You need to be in a voice channel to use this command!")
             </code></pre>
         </article>
 
@@ -60,42 +60,42 @@
             </ul>
             <h3>Fragment kodu (implementacja ruchu):</h3>
             <pre><code>
-            public boolean move(Move move) {
-                // Extract source and destination positions from the move
-                Position from = move.from;
-                Position to = move.to;
-        
-                // Get the tiles at the source and destination positions
-                Tile tileFrom = this.getTile(from.x, from.y);
-                Tile tileTo = this.getTile(to.x, to.y);
-        
-                // Validate source and destination tiles
-                // Check if the source tile is valid (not empty or invalid)
-                if (tileFrom == Tile.EMPTY || tileFrom == Tile.INVALID) {
-                    System.out.println("Move failed: Cannot move from an empty or invalid tile at " + from);
-                    return false; // Move is not possible
-                }
-                // Check if the destination tile is empty
-                if (tileTo != Tile.EMPTY) {
-                    System.out.println("Move failed: Destination tile is not empty at " + to);
-                    return false; // Move is not possible
-                }
-        
-                // Get the list of valid moves from the source position
-                List<Position> validMoves = getValidMoveTargets(from);
-                // Check if the destination position is part of valid moves
-                if (!validMoves.contains(to)) {
-                    System.out.println("Move failed: " + to + " is not a valid move from " + from);
-                    return false; // Move is not valid
-                }
-        
-                // Perform the move by setting the source tile to empty and the destination tile
-                // to the moved tile
-                tiles.setTile(from.x, from.y, Tile.EMPTY);
-                tiles.setTile(to.x, to.y, tileFrom);
-                System.out.println("Move successful: " + from + " -> " + to);
-                return true; // Move was successful
-            }
+public boolean move(Move move) {
+    // Extract source and destination positions from the move
+    Position from = move.from;
+    Position to = move.to;
+
+    // Get the tiles at the source and destination positions
+    Tile tileFrom = this.getTile(from.x, from.y);
+    Tile tileTo = this.getTile(to.x, to.y);
+
+    // Validate source and destination tiles
+    // Check if the source tile is valid (not empty or invalid)
+    if (tileFrom == Tile.EMPTY || tileFrom == Tile.INVALID) {
+        System.out.println("Move failed: Cannot move from an empty or invalid tile at " + from);
+        return false; // Move is not possible
+    }
+    // Check if the destination tile is empty
+    if (tileTo != Tile.EMPTY) {
+        System.out.println("Move failed: Destination tile is not empty at " + to);
+        return false; // Move is not possible
+    }
+
+    // Get the list of valid moves from the source position
+    List<Position> validMoves = getValidMoveTargets(from);
+    // Check if the destination position is part of valid moves
+    if (!validMoves.contains(to)) {
+        System.out.println("Move failed: " + to + " is not a valid move from " + from);
+        return false; // Move is not valid
+    }
+
+    // Perform the move by setting the source tile to empty and the destination tile
+    // to the moved tile
+    tiles.setTile(from.x, from.y, Tile.EMPTY);
+    tiles.setTile(to.x, to.y, tileFrom);
+    System.out.println("Move successful: " + from + " -> " + to);
+    return true; // Move was successful
+}
             </code></pre>
         </article>
 
@@ -114,23 +114,23 @@
             </ul>
             <h3>Fragment kodu (pobieranie zawartości koszyka):</h3>
             <pre><code>
-            const pool = require("../config/db_setup");
+const pool = require("../config/db_setup");
 
-            // listing cart items
-            router.get("", async (req, res) => {
-            if (!req.session.user) {
-                return res.status(401).send("Content available only for logged in users.");
-            }
-            try {
-                const { rows } = await pool.query(
-                "SELECT products.*, carts.quantity FROM products JOIN carts ON products.id = carts.product_id WHERE carts.user_id = $1",
-                [req.session.user.id]
-                );
-                res.render("cart", { products: rows });
-            } catch (err) {
-                res.status(500).send("Error" + err.message);
-            }
-            });
+// listing cart items
+router.get("", async (req, res) => {
+if (!req.session.user) {
+    return res.status(401).send("Content available only for logged in users.");
+}
+try {
+    const { rows } = await pool.query(
+    "SELECT products.*, carts.quantity FROM products JOIN carts ON products.id = carts.product_id WHERE carts.user_id = $1",
+    [req.session.user.id]
+    );
+    res.render("cart", { products: rows });
+} catch (err) {
+    res.status(500).send("Error" + err.message);
+}
+});
             </code></pre>
         </article>
     </main>
