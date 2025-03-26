@@ -21,57 +21,116 @@
 
     <main>
         <article id="discord-bot" class="project-detail">
-            <h2>Discord Music Bot 🤖</h2>
-            <p>Zaawansowany bot muzyczny z obsługą komend głosowych i tekstowych.</p>
+            <h2>Discord Bot 🤖</h2>
+            <p>Zaawansowany bot muzyczny z obsługą komend tekstowych.</p>
             <h3>Technologie:</h3>
             <ul class="tech-list">
-                <li class="discord-bullet">Python 3.10+</li>
-                <li class="discord-bullet">Biblioteka discord.py</li>
-                <li class="discord-bullet">FFmpeg do konwersji audio</li>
+                <li class="discord-bullet">Python</li>
+                <li class="discord-bullet">discord.py</li>
+                <li class="discord-bullet">FFmpeg</li>
                 <li class="discord-bullet">YouTube Data API v3</li>
             </ul>
-            <h3>Fragment kodu (obsługa komendy play):</h3>
+            <h3>Fragment kodu (obsługa komendy join):</h3>
             <pre><code>
-@bot.command()
-async def play(ctx, url: str):
-    if not ctx.author.voice:
-        await ctx.send("Musisz być na kanale głosowym!")
-        return
-
-    voice_client = await ctx.author.voice.channel.connect()
-    ydl_opts = {'format': 'bestaudio/best'}
-
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(url, download=False)
-        url2 = info['formats'][0]['url']
-        voice_client.play(discord.FFmpegPCMAudio(url2))
+            @commands.command()
+            async def join(self, ctx):
+                """Joins the user's voice channel."""
+                print(f'bot join {ctx.author.voice.channel}, {ctx.voice_client}')
+                if ctx.author.voice:
+                    if ctx.voice_client is None:
+                        await ctx.author.voice.channel.connect()
+                        await ctx.send(f"Joined {ctx.author.voice.channel}")
+                    else:
+                        await ctx.send("Already connected to a voice channel.")
+                else:
+                    await ctx.send("You need to be in a voice channel to use this command!")
             </code></pre>
         </article>
 
-        <article id="minecraft-mod" class="project-detail">
-            <h2>Minecraft Tech Mod ⛏️</h2>
-            <p>Mod dodający nowe rudę, narzędzia i maszyny do automatycznego craftingu.</p>
+        <article id="chinese-checkers" class="project-detail">
+            <h2>Chińskie Warcaby ♟️</h2>
+            <div class="screenshot-container">
+                <img src="images/checkers-screenshot.jpg" alt="Interfejs gry Chińskie Warcaby" class="project-screenshot">
+            </div>
             <h3>Technologie:</h3>
             <ul class="tech-list">
-                <li class="minecraft-bullet">Java 17</li>
-                <li class="minecraft-bullet">NeoForge (1.20.1)</li>
-                <li class="minecraft-bullet">System budowania Maven</li>
-                <li class="minecraft-bullet">Custom JSON recipes</li>
+                <li class="java-bullet">Java</li>
+                <li class="java-bullet">JavaFX</li>
+                <li class="java-bullet">Maven</li>
             </ul>
-            <h3>Fragment kodu (rejestracja bloku):</h3>
+            <h3>Fragment kodu (implementacja ruchu):</h3>
             <pre><code>
-public class ModBlocks {
-    public static final DeferredRegister<Block> BLOCKS =
-        DeferredRegister.create(NeoForgeRegistries.BLOCKS, MODID);
+                public boolean move(Move move) {
+                    // Extract source and destination positions from the move
+                    Position from = move.from;
+                    Position to = move.to;
+            
+                    // Get the tiles at the source and destination positions
+                    Tile tileFrom = this.getTile(from.x, from.y);
+                    Tile tileTo = this.getTile(to.x, to.y);
+            
+                    // Validate source and destination tiles
+                    // Check if the source tile is valid (not empty or invalid)
+                    if (tileFrom == Tile.EMPTY || tileFrom == Tile.INVALID) {
+                        System.out.println("Move failed: Cannot move from an empty or invalid tile at " + from);
+                        return false; // Move is not possible
+                    }
+                    // Check if the destination tile is empty
+                    if (tileTo != Tile.EMPTY) {
+                        System.out.println("Move failed: Destination tile is not empty at " + to);
+                        return false; // Move is not possible
+                    }
+            
+                    // Get the list of valid moves from the source position
+                    List<Position> validMoves = getValidMoveTargets(from);
+                    // Check if the destination position is part of valid moves
+                    if (!validMoves.contains(to)) {
+                        System.out.println("Move failed: " + to + " is not a valid move from " + from);
+                        return false; // Move is not valid
+                    }
+            
+                    // Perform the move by setting the source tile to empty and the destination tile
+                    // to the moved tile
+                    tiles.setTile(from.x, from.y, Tile.EMPTY);
+                    tiles.setTile(to.x, to.y, tileFrom);
+                    System.out.println("Move successful: " + from + " -> " + to);
+                    return true; // Move was successful
+                }
+            </code></pre>
+        </article>
 
-    public static final RegistryObject<Block> EXAMPLE_BLOCK = BLOCKS.register(
-        "example_block",
-        () -> new Block(BlockBehaviour.Properties.of()
-            .strength(3.5f)
-            .requiresCorrectToolForDrops()
-        )
+        <article id="shop-webservice" class="project-detail">
+            <h2>Shop Webservice 🛒</h2>
+            <div class="screenshot-container">
+                <img src="images/shop-api.jpg" alt="Diagram architektury Shop Webservice" class="project-screenshot">
+            </div>
+            <h3>Technologie:</h3>
+            <ul class="tech-list">
+                <li class="js-bullet">Node.js</li>
+                <li class="js-bullet">Express.js</li>
+                <li class="js-bullet">PostgreSQL</li>
+                <li class="js-bullet">Express-session</li>
+                <li class="js-bullet">PG-pool</li>
+            </ul>
+            <h3>Fragment kodu (pobieranie zawartości koszyka):</h3>
+            <pre><code>
+const pool = require("../config/db_setup");
+
+// listing cart items
+router.get("", async (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).send("Content available only for logged in users.");
+  }
+  try {
+    const { rows } = await pool.query(
+      "SELECT products.*, carts.quantity FROM products JOIN carts ON products.id = carts.product_id WHERE carts.user_id = $1",
+      [req.session.user.id]
     );
-}
+    res.render("cart", { products: rows });
+  } catch (err) {
+    res.status(500).send("Error" + err.message);
+  }
+});
             </code></pre>
         </article>
     </main>

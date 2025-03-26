@@ -143,7 +143,16 @@ code {
     content: "⛏️";
 }
 
+.java-bullet::before {
+    content: "♟️";
+}
+
+.js-bullet::before {
+    content: "🛒";
+}
+
+/* Responsive images */
 img {
-    width : 500;
-    height: auto; /*to preserve the aspect ratio of the image*/
+    max-width: 50%;
+    height: auto;
 }
