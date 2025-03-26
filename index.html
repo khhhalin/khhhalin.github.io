@@ -1,76 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
-<meta charset="UTF-8">
-<title>Radar Chart with Sliders</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-  }
-  #radarChart {
-    width: 300px;
-    height: 300px;
-  }
-  .slider {
-    width: 300px; /* Adjust width as per your layout */
-    margin: 10px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Maciej Kalinowski</title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-<canvas id="radarChart"></canvas>
-<div id="sliders">
-  <input type="range" id="value1" class="slider" min="0" max="100" value="50" oninput="updateChart()">
-  <input type="range" id="value2" class="slider" min="0" max="100" value="50" oninput="updateChart()">
-  <input type="range" id="value3" class="slider" min="0" max="100" value="50" oninput="updateChart()">
-  <input type="range" id="value4" class="slider" min="0" max="100" value="50" oninput="updateChart()">
-</div>
-<script>
-var ctx = document.getElementById('radarChart').getContext('2d');
-var myRadarChart = new Chart(ctx, {
-    type: 'radar',
-    data: {
-        labels: ['Value 1', 'Value 2', 'Value 3', 'Value 4'],
-        datasets: [{
-            label: 'My First Dataset',
-            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-            borderColor: 'rgba(255, 99, 132, 1)',
-            pointBackgroundColor: 'rgba(255, 99, 132, 1)',
-            data: [30, 25, 40, 5]
-        }]
-    },
-    options: {
-        scales: {
-            r: {
-                angleLines: {
-                    display: false
-                },
-                suggestedMin: 0,
-                suggestedMax: 100
-            }
-        },
-        maintainAspectRatio: false, // Important for responsive designs
-        aspectRatio: 1 // Keep the chart as a square
-    }
-});
-updateChart()
+    <header>
+        <h1>Maciej Kalinowski </h1>
+        <nav>
+            <ul class="nav-list">
+                <li><a href="index.html">Strona główna</a></li>
+                <li><a href="projects.html">Projekty</a></li>
+                <li><a href="interests.html">Zainteresowania IT</a></li>
+                <li><a href="hobbies.html">Hobby</a></li>
+            </ul>
+        </nav>
+    </header>
 
-function updateChart() {
-    myRadarChart.data.datasets[0].data = [
-        document.getElementById('value1').value,
-        document.getElementById('value2').value,
-        document.getElementById('value3').value,
-        document.getElementById('value4').value
-    ];
-    myRadarChart.update();
-}
-</script>
+    <main>
+        <section class="about">
+            <img src="images/avatar.jpg" alt="Zdjęcie profilowe" class="profile-img">
+            <h2>O mnie</h2>
+            <p>Student informatyki algorytmicznej na Politechnice Wrocławskiej </p>
+            <p>Interesuje sie programowaniem i stand-upem, w wolnym czasie gram w gry i jeżdzę na rowerze.</p>
+        </section>
+
+        <section class="contact">
+            <h2>Kontakt</h2>
+            <ul>
+                <li>Email: <a href="276216@student.pwr.edu.pl">276216@student.pwr.edu.pl</a></li>
+                <li>GitHub: <a href="https://github.com/khhhalin">khhhalin</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 Maciej Kalinowski</p>
+    </footer>
 </body>
 </html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Szczegóły Projektów</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Szczegóły Projektów</h1>
+        <nav>
+            <ul class="nav-list">
+                <li><a href="index.html">Strona główna</a></li>
+                <li><a href="projects.html">Projekty</a></li>
+                <li><a href="interests.html">Zainteresowania IT</a></li>
+                <li><a href="hobbies.html">Hobby</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <article id="discord-bot" class="project-detail">
+            <h2>Discord Music Bot 🤖</h2>
+            <p>Zaawansowany bot muzyczny z obsługą komend głosowych i tekstowych.</p>
+            <h3>Technologie:</h3>
+            <ul class="tech-list">
+                <li class="discord-bullet">Python 3.10+</li>
+                <li class="discord-bullet">Biblioteka discord.py</li>
+                <li class="discord-bullet">FFmpeg do konwersji audio</li>
+                <li class="discord-bullet">YouTube Data API v3</li>
+            </ul>
+            <h3>Fragment kodu (obsługa komendy play):</h3>
+            <pre><code>
+@bot.command()
+async def play(ctx, url: str):
+    if not ctx.author.voice:
+        await ctx.send("Musisz być na kanale głosowym!")
+        return
+
+    voice_client = await ctx.author.voice.channel.connect()
+    ydl_opts = {'format': 'bestaudio/best'}
+
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(url, download=False)
+        url2 = info['formats'][0]['url']
+        voice_client.play(discord.FFmpegPCMAudio(url2))
+            </code></pre>
+        </article>
+
+        <article id="minecraft-mod" class="project-detail">
+            <h2>Minecraft Tech Mod ⛏️</h2>
+            <p>Mod dodający nowe rudę, narzędzia i maszyny do automatycznego craftingu.</p>
+            <h3>Technologie:</h3>
+            <ul class="tech-list">
+                <li class="minecraft-bullet">Java 17</li>
+                <li class="minecraft-bullet">NeoForge (1.20.1)</li>
+                <li class="minecraft-bullet">System budowania Maven</li>
+                <li class="minecraft-bullet">Custom JSON recipes</li>
+            </ul>
+            <h3>Fragment kodu (rejestracja bloku):</h3>
+            <pre><code>
+public class ModBlocks {
+    public static final DeferredRegister<Block> BLOCKS =
+        DeferredRegister.create(NeoForgeRegistries.BLOCKS, MODID);
+
+    public static final RegistryObject<Block> EXAMPLE_BLOCK = BLOCKS.register(
+        "example_block",
+        () -> new Block(BlockBehaviour.Properties.of()
+            .strength(3.5f)
+            .requiresCorrectToolForDrops()
+        )
+    );
+}
+            </code></pre>
+        </article>
+    </main>
+
+    <footer>
+        <p>© 2025 Maciej Kalinowski</p>
+    </footer>
+</body>
+</html>
