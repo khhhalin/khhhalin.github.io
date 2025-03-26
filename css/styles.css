@@ -10,6 +10,7 @@ body {
     line-height: 1.6;
     padding: 1rem;
     color: #333;
+    background-color: #fffdfa;
 }
 
 header {
@@ -106,7 +107,7 @@ footer {
 
 /* Code blocks styling */
 pre {
-    background-color: #f4f4f4;
+    background-color: #ffe498;
     padding: 1rem;
     overflow-x: auto;
     border-radius: 5px;
