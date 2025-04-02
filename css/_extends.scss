@@ -1,0 +1,23 @@
+@use 'variables' as *;
+@use 'mixins' as *;
+
+// Card styles
+%card {
+    border: 1px solid #ddd;
+    padding: $base-padding;
+    border-radius: $border-radius;
+}
+
+// List reset
+%list-reset {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+// Link hover effect
+%link-hover {
+    @include transition(background-color);
+    &:hover {
+        background-color: $secondary-color;
+    }
+}
